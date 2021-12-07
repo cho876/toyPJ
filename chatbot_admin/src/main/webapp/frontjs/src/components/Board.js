@@ -91,7 +91,7 @@ export default function Board({keywordInStore, pageNumber, pageSize, columns, se
                 Toolbar: props => (
                     <Grid container>
                         <Grid item xs={6}>
-                            <Grid container alignItems="center" justify="flex-end" direction="row">
+                            <Grid container alignItems="center" direction="row">
                                 <Grid className={classes.margin}>
                                     <Grid container spacing={1} alignItems="flex-end">
                                         <Grid item>
