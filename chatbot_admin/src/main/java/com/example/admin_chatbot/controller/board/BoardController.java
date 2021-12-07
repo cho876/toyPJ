@@ -35,9 +35,9 @@ public class BoardController {
 		
 		HashMap<String,Integer> map = new HashMap<String,Integer>();
 		
-		System.out.println(">> getAllBoardList");
-		System.out.println(">> request: " + request.getParameter("page"));
-		System.out.println(">> request: " + request.getParameter("size"));
+		System.out.println("== getAllBoardList");
+		System.out.println("page: " + request.getParameter("page"));
+		System.out.println("size: " + request.getParameter("size"));
 		
 		int page = Integer.parseInt(request.getParameter("page"));
 		int size = Integer.parseInt(request.getParameter("size"));
@@ -65,10 +65,11 @@ public class BoardController {
 	public HashMap<String, String> updateBoardById(@RequestBody BoardVo boardVo) {
 		HashMap<String, String> ret = new HashMap<String, String>();
 		
-		System.out.println(">>> updateBoardByID");
-		System.out.println(">> id: " + boardVo.getId());
-		System.out.println(">> comments: " + boardVo.getComments());
-		System.out.println(">> status: " + boardVo.getStatus());
+		System.out.println("== updateBoardByID");
+		System.out.println("id: " + boardVo.getId());
+		System.out.println("comments: " + boardVo.getComments());
+		System.out.println("message: " + boardVo.getMessage());
+		System.out.println("status: " + boardVo.getStatus());
 		
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -85,10 +86,11 @@ public class BoardController {
 	public HashMap<String, String> sendEmail(@RequestBody BoardVo boardVo) {
 		HashMap<String, String> ret = new HashMap<String, String>();
 		
-		System.out.println(">>> sendEmail");
-		System.out.println(">> id: " + boardVo.getId());
-		System.out.println(">> comments: " + boardVo.getComments());
-		System.out.println(">> status: " + boardVo.getStatus());
+		System.out.println("== sendEmail");
+		System.out.println("id: " + boardVo.getId());
+		System.out.println("comments: " + boardVo.getComments());
+		System.out.println("message: " + boardVo.getMessage());
+		System.out.println("status: " + boardVo.getStatus());
 		
 		String subject = "[버그문의사항] 진행상황을 공유드립니다.";
 		String content = "안녕하세요. 000입니다."
@@ -110,11 +112,11 @@ public class BoardController {
 		
 		HashMap<String,Integer> map = new HashMap<String,Integer>();
 		
-		System.out.println(">> getBoardBySearch");
-		System.out.println(">> request: " + request.getParameter("page"));
-		System.out.println(">> request: " + request.getParameter("size"));
-		System.out.println(">> request: " + request.getParameter("type"));
-		System.out.println(">> request: " + request.getParameter("keyword"));
+		System.out.println("== getBoardBySearch");
+		System.out.println("page: " + request.getParameter("page"));
+		System.out.println("size: " + request.getParameter("size"));
+		System.out.println("type: " + request.getParameter("type"));
+		System.out.println("keyword: " + request.getParameter("keyword"));
 
 		int page = Integer.parseInt(request.getParameter("page"));
 		int size = Integer.parseInt(request.getParameter("size"));

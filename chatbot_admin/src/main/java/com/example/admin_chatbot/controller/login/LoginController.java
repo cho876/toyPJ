@@ -23,8 +23,10 @@ public class LoginController {
 	public int onLogin(@RequestBody HashMap<String,String> param) {
 		HashMap<String,String> map = new HashMap<String,String>();
 		
-		System.out.println(">> onLogin");
-		
+		System.out.println("== onLogin");
+		System.out.println("user_id: " + param.get("user_id"));
+		System.out.println("user_pw: " + param.get("user_pw"));
+
 		map.put("user_id", param.get("user_id"));
 		map.put("user_pw", param.get("user_pw"));
 		
