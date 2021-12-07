@@ -85,7 +85,7 @@ class ChatComp extends Component{
 		this.setState({[e.target.name]:e.target.value})
 	}
 
-	// 직접적으로 state를 바꿔주는 func
+	// 채팅 데이터(replies)를 add하는 func
 	addMessage=(lr, senderId,message,btnList,isButton)=>{
 			this.setState({replies:[...this.state.replies,{
 				uuid:this.state.replies.length+1,
