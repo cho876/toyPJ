@@ -2,14 +2,15 @@ import type from './type'
 import {get, update, getForSearch,sendEmail} from "../../api/boardApi";
 import {getData} from "../../../helper/boardHelper";
 
+// 게시판 화면 reload
 export const changePage = (pageNumber, pageSize, searchType, keyword, isSearch) => dispatch => {
 
     const requestApi = (isSearch && keyword.trim() != "" ?
         getForSearch(pageNumber + 1, pageSize, searchType, keyword) : get(pageNumber + 1, pageSize));
 
     return requestApi.then(response => {
-		console.log(JSON.stringify(response));
-        const selectedData = getData(pageNumber, pageSize, response);
+	const resCnt = response.data.length;
+        const selectedData = getData(pageNumber, resCnt, pageSize, response);
         dispatch({
         	type: type.CHANGE_PAGE,
             payload: {
@@ -26,7 +27,8 @@ export const keywordSearch = (pageSize, searchType, keyword) => dispatch => {
     const pageNumber = 0;
     return getForSearch(pageNumber + 1, pageSize, searchType, keyword)
         .then(response => {
-			const selectedData = getData(pageNumber, pageSize, response);
+			const resCnt = response.data.length;
+			const selectedData = getData(pageNumber, resCnt, pageSize, response);
 			dispatch({
 				type: type.KEYWORD_SEARCH,
 				payload: {
@@ -45,7 +47,8 @@ export const changeShowAllContents = (pageSize) => dispatch => {
 
     return get(pageNumber + 1, pageSize)
         .then(response => {
-			const selectedData = getData(pageNumber, pageSize, response);
+			const resCnt = response.data.length;
+			const selectedData = getData(pageNumber, resCnt, pageSize, response);
 			dispatch({
 				type: type.CHANGE_SHOWING_ALL_CONTENTS,
 				payload: {
@@ -70,8 +73,6 @@ export const closeModal = () => ({
 
 // modal 글 수정 func
 export const modifyData = (id, updatedData, allData) => dispatch => {
-	console.log(JSON.stringify(updatedData));
-	
     return update(updatedData)
         .then(response => {
 			allData.forEach(function (element) {
