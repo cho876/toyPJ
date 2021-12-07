@@ -98,12 +98,12 @@ class ChatComp extends Component{
 			})
 			
 			const {scrollHeight} = this.box;
-			this.box.scrollTop = scrollHeight;	// 스크롤은 항상 최하단
+			this.box.scrollTop = scrollHeight;	// Scroll 위치 조정 (최하단)
 	}
 	
 	// Button type 질의응답 진행 시, call
 	clickEvent=(code)=>{
-		if(code === '1001'){	// '버그신고' 클리한 경우,
+		if(code === '1001'){	// '버그신고' Click
 			this.state.enableWrite = true;
 			this.addMessage('left','알림봇','버그 상세 내용을 기입해주세요.\n비회원은 피드백을 받으실 수 없습니다.',[],false);
 		}else{

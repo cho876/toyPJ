@@ -43,10 +43,12 @@ class Footer extends Component {
 	}
 };
 
+/* For css - Start */
 const fabStyle={
   position: 'fixed',
   bottom: 50,
   right: 50,
 };
+/* For css - End */
 
 export default Footer;
