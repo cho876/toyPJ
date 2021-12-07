@@ -1,36 +1,33 @@
+import {BOARD_PAGE_SIZE} from '../static/constant';
 
-export const getData = (pageNumber, pageSize, response) => {
-    let prevFakeData = createPrevFakeData(pageSize * pageNumber);
-    let nextFakeData = createNextFakeData(pageSize);
-    const realData = setRealData(response.data);
+export const getData = (pageNumber, resCnt, pageSize, response) => {
+    let prevFakeData = createPrevFakeData(pageSize * pageNumber);	// 가상 10개 Arr 생성(prev page)
+    let nextFakeData = createNextFakeData(pageSize);	// 가상의 10개 Arr 생성(next page)
+    const realData = response.data;
 
     if (isFirstPage(pageNumber)) {
         if (realData.length === 0){
             return new Array();
         }
-        if (response.data.totalPages === 1) {
+        if (resCnt < BOARD_PAGE_SIZE) {
             return realData;
         }
         return realData.concat(nextFakeData);
-    } else if (isLastPage(pageNumber, response)) {
+    } else if (resCnt < BOARD_PAGE_SIZE) {
         return prevFakeData.concat(realData);
     } else {
         return prevFakeData.concat(realData).concat(nextFakeData);
     }
 }
 
-const setRealData = contents => {
-    return contents;
-}
-
 const createPrevFakeData = size => {
-    let fakeData = Array.apply(null, new Array(size)).map(Object.prototype.valueOf, new Object());
+    let fakeData = Array.apply(null, new Array(size));
     return fakeData.map((currentValue, index) => setFakeData(index));
 }
 
 
 const createNextFakeData = size => {
-    let fakeData = Array.apply(null, new Array(size)).map(Object.prototype.valueOf, new Object());
+    let fakeData = Array.apply(null, new Array(size));
     return fakeData.map((currentValue, index) => setFakeData(index));
 }
 
@@ -42,8 +39,4 @@ const setFakeData = id => {
 
 const isFirstPage  = pageNumber => {
     return pageNumber == 0;
-}
-
-const isLastPage = (pageNumber, response) => {
-    return pageNumber == response.data.totalPages - 1
 }
