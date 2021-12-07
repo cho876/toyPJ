@@ -1,5 +1,5 @@
 
-package com.example.react_chatbot.controller;
+package com.example.react_chatbot.controller.chat;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -28,17 +28,17 @@ public class ChatController {
 	
 	@Autowired
 	private ChatService chatService;
-
-	@Autowired
-	private MemberService memberService;
-	
 	
 	@RequestMapping(value="/sendBug", method= {RequestMethod.POST})
 	public HashMap<String,String> sendBug(@RequestBody HashMap<String,String> param) {
 		HashMap<String,String> map = new HashMap<String,String>();
 		
-		System.out.println(">>>>>>> sendBug Called");
-		
+		System.out.println("== sendBug Called");
+		System.out.println("senderId: " + param.get("senderId"));
+		System.out.println("message: " + param.get("message"));
+		System.out.println("location: " + param.get("location"));
+		System.out.println("email: " + param.get("email"));
+
 		String senderId = param.get("senderId");
 		String message = param.get("message");
 		String location = param.get("location");
@@ -66,13 +66,15 @@ public class ChatController {
 	@RequestMapping(value="/getBtn", method= {RequestMethod.GET})
 	public HashMap<String,Object> getBtn(HttpServletRequest request) {
 		HashMap<String,Object> map = new HashMap<String,Object>();
+		
+		System.out.println("== getBtn");
+		System.out.println("btnno: " + request.getParameter("btnno"));
 
 		String btnNo = request.getParameter("btnno");
 		
 		List<BtnVo> btnList = null;
 		HashMap<String,Object> res = new HashMap<String,Object>();
 		
-		System.out.println(">> btnNo: " + btnNo);
 		int cnt = chatService.countChildBtn(btnNo);
 		System.out.println(">> cnt: " + cnt);
 		
@@ -80,8 +82,7 @@ public class ChatController {
 			btnList = chatService.getChildBtn(btnNo);
 			map.put("flag", "btn");
 			map.put("nextBtn", btnList);
-		}else {
-			System.out.println(">>> btnNo: " + btnNo);
+		}else {	// 최종 답변
 			res = chatService.getAnswer(btnNo);
 
 			map.put("flag", "str");
@@ -90,17 +91,5 @@ public class ChatController {
 		}
 		
 		return map;
-	}
-	
-	
-	@RequestMapping(value="/onLogin", method= {RequestMethod.POST})
-	public int onLogin(@RequestBody HashMap<String,String> param) {
-		HashMap<String,String> map = new HashMap<String,String>();
-		
-		map.put("user_id", param.get("user_id"));
-		map.put("user_pw", param.get("user_pw"));
-		int ret = memberService.selectMember(map);
-
-		return ret;
 	}
 }
