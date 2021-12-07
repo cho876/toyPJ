@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.react_chatbot.repository.UserMapper">
+
+    <select id="selectMember" parameterType="hashmap" resultType="int">
+      SELECT 
+      	COUNT(*)
+      FROM 
+      	USER_INFO
+      WHERE 
+      	USER_ID = #{user_id} 
+      	AND USER_PW = #{user_pw}
+    </select>
+
+</mapper>
