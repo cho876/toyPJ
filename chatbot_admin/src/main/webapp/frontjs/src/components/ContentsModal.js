@@ -63,7 +63,7 @@ export default function ContentsModal({isModalOpen, modalData, isWriteModal, han
                 aria-describedby="simple-modal-description"
             >
                 <div style={modalStyle} className={classes.paper}>
-                    <form className={classes.form} noValidate onSubmit={(event) => {
+                    <form noValidate onSubmit={(event) => {
                         event.preventDefault();
                         handleSave(combineData());
                     }}>
@@ -113,7 +113,7 @@ export default function ContentsModal({isModalOpen, modalData, isWriteModal, han
                             <div>
                                 <Typography variant="body2" gutterBottom>작성자 : {modalData.email}</Typography>
                                 <Grid container>
-                                    <Button type="submit" color="primary" className={classes.submit}>Save</Button>
+                                    <Button type="submit" color="primary">Save</Button>
                                     <Button onClick={() => {
                                         setIsModify(false);
                                         handleClose();
@@ -127,8 +127,7 @@ export default function ContentsModal({isModalOpen, modalData, isWriteModal, han
                                 <Grid container>
                                     {isModify ?
                                         <Grid>
-                                            <Button type="submit" color="primary"
-                                                    className={classes.submit}>Save</Button>
+                                            <Button type="submit" color="primary">Save</Button>
                                             <Button onClick={() => setIsModify(false)}>Back</Button>
                                         </Grid>
                                         :
