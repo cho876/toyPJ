@@ -42,7 +42,7 @@ export default function Login({handleClick}) {
 	useEffect(()=>{
 		setAccountId("");
 		setPassword("");
-	})
+	},[])
 
   return (
       <Grid container component="main" sx={{ height: '100vh' }}>
