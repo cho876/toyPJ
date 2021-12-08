@@ -32,7 +32,7 @@ import logoPath from '../image/maple.jpg';
 /* For css - End */
 
 
-export default function Login({handleClick, isLoginPage}) {
+export default function Login({handleClick}) {
 	const classes = useStyles();
 
 
@@ -42,7 +42,7 @@ export default function Login({handleClick, isLoginPage}) {
 	useEffect(()=>{
 		setAccountId("");
 		setPassword("");
-	}, [isLoginPage])
+	})
 
   return (
       <Grid container component="main" sx={{ height: '100vh' }}>
