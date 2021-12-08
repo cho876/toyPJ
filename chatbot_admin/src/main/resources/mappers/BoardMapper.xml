@@ -11,6 +11,7 @@
       	EMAIL,
       	MESSAGE,
       	LOCATION,
+	COMMENTS,
       	STATUS,
       	REGDT
       FROM 
@@ -26,7 +27,7 @@
      	UPDATE
      		ERR_MSG_INFO
      	SET
-     		COMMENT = #{comments}, STATUS=#{status}, MODDT = #{moddt}
+     		COMMENTS = #{comments}, STATUS=#{status}, MODDT = #{moddt}
      	WHERE
      		ID = #{id}
     </select>

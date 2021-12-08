@@ -88,7 +88,7 @@ export default function ContentsModal({isModalOpen, modalData, isWriteModal, han
                                     fullWidth
                                     multiline
                                     rows={4}
-                                    defaultValue={comments}
+                                    defaultValue={modalData.comments}
                                     variant="outlined"
                                     margin="normal"
                                     onChange={event => setComments(event.target.value)}
