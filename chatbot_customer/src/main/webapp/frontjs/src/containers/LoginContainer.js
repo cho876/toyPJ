@@ -9,7 +9,7 @@ import {loginApi} from '../store/api/userApi';
 import {loginFail, loginSuccess} from "../store/modules/main/action";
 
 
-const MainContainer = ({isLoginPage, loginSuccess, loginFail}) => {
+const MainContainer = ({loginSuccess, loginFail}) => {
     let history = useHistory();
 
 	// Callback login api
@@ -26,16 +26,14 @@ const MainContainer = ({isLoginPage, loginSuccess, loginFail}) => {
         }
     }
 
-    return <Login
-        handleClick={loginSubmit}
-        isLoginPage={isLoginPage}
-    />;
+    return (
+	<Login handleClick={loginSubmit} />
+    );
 }
 
 // Mapping store state & local state
 const mapStateToProps = state => ({
-    errorMessage: state.main.errorMessage,
-    isLoginPage: state.main.isLoginPage
+    errorMessage: state.main.errorMessage
 })
 
 // Action dispatch
