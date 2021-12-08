@@ -10,9 +10,6 @@ class Footer extends Component {
         this.state = {
             isOpenPopup: false,
         }
- 
-        this.openPopup = this.openPopup.bind(this);
-        this.closePopup = this.closePopup.bind(this);
     }
 	
     openPopup(){
