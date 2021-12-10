@@ -17,6 +17,7 @@ import com.example.admin_chatbot.service.board.BoardService;
 import com.example.admin_chatbot.util.CodeUtil;
 import com.example.admin_chatbot.util.EmailUtil;
 import com.example.admin_chatbot.vo.board.BoardVo;
+import com.example.admin_chatbot.vo.board.MailVo;
 import com.example.admin_chatbot.vo.board.SearchVo;
 
 
@@ -86,6 +87,11 @@ public class BoardController {
 	public HashMap<String, String> sendEmail(@RequestBody BoardVo boardVo) {
 		HashMap<String, String> ret = new HashMap<String, String>();
 		
+		if(boardVo.getEmail().equals("noname")) {
+			ret.put("result", "success");
+			return ret;
+		}
+
 		System.out.println("== sendEmail");
 		System.out.println("id: " + boardVo.getId());
 		System.out.println("comments: " + boardVo.getComments());
@@ -102,6 +108,19 @@ public class BoardController {
 				+"\n감사합니다.";
 		
 		emailUtil.sendEmail(boardVo.getEmail(), subject, content);
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		Calendar c = Calendar.getInstance();
+		String strToday = sdf.format(c.getTime());
+		
+		MailVo mailVo = new MailVo();
+		
+		mailVo.setToAddr(boardVo.getEmail());
+		mailVo.setSubject(subject);
+		mailVo.setContents(content);
+		mailVo.setSnddt(strToday);
+		
+		boardService.insertMailHistory(mailVo);
 		
 		ret.put("result", "success");
 		return ret;

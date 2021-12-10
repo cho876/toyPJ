@@ -88,4 +88,10 @@
       OFFSET
       	#{page}
     </select>
+
+     <insert id="insertMailHistory" parameterType="com.example.admin_chatbot.vo.board.MailVo">
+      INSERT INTO MAIL_HISTORY_INFO (TOADDR, SUBJECT, CONTENTS, SNDDT)
+      VALUES (#{toAddr}, #{subject}, #{contents}, #{snddt})
+    </insert>
+
 </mapper>

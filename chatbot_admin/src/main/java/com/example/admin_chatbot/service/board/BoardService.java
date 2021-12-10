@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.admin_chatbot.repository.board.BoardMapper;
 import com.example.admin_chatbot.vo.board.BoardVo;
+import com.example.admin_chatbot.vo.board.MailVo;
 import com.example.admin_chatbot.vo.board.SearchVo;
 
 @Service
@@ -34,5 +35,8 @@ public class BoardService {
     
     public List<BoardVo> getBoardByEmail(SearchVo searchVo) {
     	return boardMapper.getBoardByEmail(searchVo);
+    }
+    public List<BoardVo> insertMailHistory(MailVo mailVo) {
+    	return boardMapper.insertMailHistory(mailVo);
     }
 }
