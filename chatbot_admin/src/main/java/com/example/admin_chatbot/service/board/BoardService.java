@@ -36,7 +36,7 @@ public class BoardService {
     public List<BoardVo> getBoardByEmail(SearchVo searchVo) {
     	return boardMapper.getBoardByEmail(searchVo);
     }
-    public List<BoardVo> insertMailHistory(MailVo mailVo) {
-    	return boardMapper.insertMailHistory(mailVo);
+    public void insertMailHistory(MailVo mailVo) {
+    	boardMapper.insertMailHistory(mailVo);
     }
 }

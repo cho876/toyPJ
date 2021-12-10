@@ -16,5 +16,5 @@ public interface BoardMapper {
 	List<BoardVo> getBoardByLocation(SearchVo searchVo);	    
 	List<BoardVo> getBoardByMessage(SearchVo searchVo);	    
 	List<BoardVo> getBoardByEmail(SearchVo searchVo);	  
-	List<BoardVo> insertMailHistory(MailVo mailVo);
+	void insertMailHistory(MailVo mailVo);
 }
