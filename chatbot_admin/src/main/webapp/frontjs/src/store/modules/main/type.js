@@ -1,0 +1,4 @@
+export default {
+    LOGIN_SUCCESS : 'MAIN/LOGIN_SUCCESS',
+    LOGIN_FAIL : 'MAIN/LOGIN_FAIL',
+}

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.react_chatbot.repository.ChatMapper">
+    <insert id="insertMsg" parameterType="com.example.react_chatbot.vo.MsgVo">
+      INSERT INTO ERR_MSG_INFO (message, email, location, regdt, status)
+      VALUES (#{message}, #{email}, #{location}, #{reg_dt},'001')
+    </insert>
+
+    <select id="getChildBtn" parameterType="String" resultType="com.example.react_chatbot.vo.BtnVo">
+      SELECT
+      	PARENTNO,
+      	(
+      		SELECT 
+      			CODENM
+      		FROM 
+      			VOT_CODE_INFO CODE
+      		WHERE 
+      			CODE.CODENO = PARENTNO
+      	)	AS PARENTNM,
+      	CHILDNO,
+      	(
+      		SELECT 
+      			CODENM
+      		FROM 
+      			VOT_CODE_INFO CODE
+      		WHERE 
+      			CODE.CODENO = CHILDNO
+      	)	AS CHILDNM
+      	FROM 
+      		VOT_CODE_RELATION_INFO
+      	WHERE 
+      		PARENTNO = #{btnNo}
+    </select>
+    
+    <select id="countChildBtn" parameterType="String" resultType="int">
+      SELECT 
+      	COUNT(*)
+      FROM 
+      	VOT_CODE_RELATION_INFO REL_INFO,
+      (
+      	SELECT 
+      		CHILDNO
+      	FROM 
+      		VOT_CODE_RELATION_INFO INFO
+      	WHERE 
+      		INFO.PARENTNO = #{btnNo}
+      ) SUB
+      WHERE 
+      	SUB.CHILDNO = REL_INFO.PARENTNO;
+    </select>
+  
+    <select id="getAnswer" parameterType="String" resultType="hashmap">
+      SELECT
+      	(
+      		SELECT 
+      			CODENM
+      		FROM 
+      			VOT_CODE_INFO CODE
+      		WHERE 
+      			CODENO = INFO.PARENTNO
+      	)	AS BTNNM,
+      	(
+      		SELECT 
+      			CODENM
+      		FROM 
+      			VOT_CODE_INFO CODE
+      		WHERE 
+      			CODENO = INFO.CHILDNO
+      	)	AS ANSNM
+      	FROM 
+      		VOT_CODE_RELATION_INFO INFO
+      	WHERE 
+      		PARENTNO = #{btnNo}
+    </select> 
+</mapper>

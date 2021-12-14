@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.admin_chatbot.repository.board.BoardMapper">
+
+    <select id="getAllBoardList" parameterType="hashmap" resultType="com.example.admin_chatbot.vo.board.BoardVo">
+      SELECT 
+      	ID,
+      	EMAIL,
+      	MESSAGE,
+      	LOCATION,
+	COMMENTS,
+      	STATUS,
+      	REGDT
+      FROM 
+      	ERR_MSG_INFO
+      ORDER BY ID DESC
+      LIMIT
+      	#{size}
+      OFFSET
+      	#{page}
+    </select>
+
+    <select id="updateBoardById" parameterType="com.example.admin_chatbot.vo.board.BoardVo">
+     	UPDATE
+     		ERR_MSG_INFO
+     	SET
+     		COMMENTS = #{comments}, STATUS=#{status}, MODDT = #{moddt}
+     	WHERE
+     		ID = #{id}
+    </select>
+    
+    <select id="getBoardByLocation" parameterType="com.example.admin_chatbot.vo.board.BoardVo" resultType="com.example.admin_chatbot.vo.board.BoardVo">
+      SELECT 
+      	ID,
+      	EMAIL,
+      	MESSAGE,
+      	LOCATION,
+      	STATUS,
+      	REGDT
+      FROM 
+      	ERR_MSG_INFO
+      WHERE
+      	LOCATION LIKE CONCAT('%',#{keyword},'%')
+      ORDER BY ID DESC
+      LIMIT
+      	#{size}
+      OFFSET
+      	#{page}
+    </select>
+    
+     <select id="getBoardByMessage" parameterType="com.example.admin_chatbot.vo.board.BoardVo" resultType="com.example.admin_chatbot.vo.board.BoardVo">
+      SELECT 
+      	ID,
+      	EMAIL,
+      	MESSAGE,
+      	LOCATION,
+      	STATUS,
+      	REGDT
+      FROM 
+      	ERR_MSG_INFO
+      WHERE
+      	MESSAGE LIKE CONCAT('%',#{keyword},'%')
+      ORDER BY ID DESC
+      LIMIT
+      	#{size}
+      OFFSET
+      	#{page}
+    </select>
+    
+     <select id="getBoardByEmail" parameterType="com.example.admin_chatbot.vo.board.BoardVo" resultType="com.example.admin_chatbot.vo.board.BoardVo">
+      SELECT 
+      	ID,
+      	EMAIL,
+      	MESSAGE,
+      	LOCATION,
+      	STATUS,
+      	REGDT
+      FROM 
+      	ERR_MSG_INFO
+      WHERE
+      	EMAIL LIKE CONCAT('%',#{keyword},'%')
+      ORDER BY ID DESC
+      LIMIT
+      	#{size}
+      OFFSET
+      	#{page}
+    </select>
+
+     <insert id="insertMailHistory" parameterType="com.example.admin_chatbot.vo.board.MailVo">
+      INSERT INTO MAIL_HISTORY_INFO (TOADDR, SUBJECT, CONTENTS, SNDDT)
+      VALUES (#{toAddr}, #{subject}, #{contents}, #{snddt})
+    </insert>
+
+</mapper>
