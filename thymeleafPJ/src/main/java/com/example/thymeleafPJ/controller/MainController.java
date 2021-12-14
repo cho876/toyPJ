@@ -11,24 +11,17 @@ import com.example.thymeleafPJ.vo.MemberVo;
 
 
 @Controller
-@RequestMapping(ReqMap.LOGIN_PATH)
-public class LoginController {
+@RequestMapping(ReqMap.MAIN_PATH)
+public class MainController {
 	
 	protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@RequestMapping(value="/index")
 	public String login(Model model) {
-		log.info("login called");
-		
-		MemberVo memberVo = new MemberVo("kwonnee","qwerty11");
-		
-		log.info("userId : " + memberVo.getUserId());
-		log.info("userPw : " + memberVo.getUserPw());
+		log.info("main called");
 		
 		
-		model.addAttribute("test", "hello world");
-		model.addAttribute("member",memberVo);
-		
-		return "login/login";
+		model.addAttribute("test", "hello world");		
+		return "main/main";
 	}
 }
