@@ -12,29 +12,59 @@
 	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
     
 
-	<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+		#floatMenu {
+			position: absolute;
+			right: 15%;
+			bottom: 5%;
+		}
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
+    <!-- Custom styles for this template -->
     <link href="/bootstrap/css/main.css" rel="stylesheet">
     
 	<script th:inline="javascript">
-		/*$(document).ready(function() {
+		$(document).ready(function() {
+	
+			// 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
 			var floatPosition = parseInt($("#floatMenu").css('top'));
-			var chatPosition = parseInt($("#chatroom").css('top'));
-			
+			// 250px 이런식으로 가져오므로 여기서 숫자만 가져온다. parseInt( 값 );
+	
 			$(window).scroll(function() {
+				// 현재 스크롤 위치를 가져온다.
 				var scrollTop = $(window).scrollTop();
 				var newPosition = scrollTop + floatPosition + "px";
-				var newPosition2 = scrollTop + floatPosition - 100 + "px";
+	
+				/* 애니메이션 없이 바로 따라감
+				 $("#floatMenu").css('top', newPosition);
+				 */
+	
 				$("#floatMenu").stop().animate({
 					"top" : newPosition
 				}, 500);
-
-				$("#chatroom").stop().animate({
-					"top" : newPosition2
-				}, 500);
-				
+				 
 			}).scroll();
-		});*/
+		});
 	</script>
   </head>
   <body>
@@ -281,14 +311,9 @@
       </div>
     </div>
   </div>
-  
-  <div id="chatroom">
-		<iframe src="/main/modal" width="100%" height="100%"></iframe>
-  </div>
-
 	<div id="floatMenu">
 		<button type="button" class="btn btn-primary">문의하기</button>
-	</div>
+	</div>	
 </main>
 
 <footer class="blog-footer">

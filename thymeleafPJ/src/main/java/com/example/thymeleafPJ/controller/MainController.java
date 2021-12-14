@@ -24,4 +24,11 @@ public class MainController {
 		model.addAttribute("test", "hello world");		
 		return "main/main";
 	}
+
+	@RequestMapping(value="/modal")
+	public String modal(Model model) {
+		log.info("modal called");
+		
+		return "main/modal";
+	}
 }
