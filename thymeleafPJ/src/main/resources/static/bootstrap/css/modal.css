@@ -2,6 +2,23 @@
 
 img{ max-width:100%;}
 
+.bd-placeholder-img {
+	font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+@media (min-width: 768px) {
+	.bd-placeholder-img-lg {
+    	font-size: 3.5rem;
+    }
+}
+
+.incoming_msg{
+	margin-bottom:10px;
+}
 
 .incoming_msg_img {
   display: inline-block;
@@ -28,10 +45,10 @@ img{ max-width:100%;}
   font-size: 12px;
   margin: 8px 0 0;
 }
-.received_withd_msg { width: 57%;}
+.received_withd_msg { width: 77%;}
 
 .mesgs {
-  padding: 30px 15px 0 25px;
+  padding: 20px 0 0 10px;
   width: 100%;
 }
 
@@ -43,18 +60,23 @@ img{ max-width:100%;}
   padding: 5px 10px 5px 12px;
   width:100%;
 }
-.outgoing_msg{ overflow:hidden; margin:26px 0 26px;}
+.outgoing_msg{ overflow:hidden; margin:26px 0 26px; text-align:right;}
 .sent_msg {
   float: right;
   width: 46%;
 }
-.input_msg_write input {
+.input_msg_write textarea {
   background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-  border: medium none;
+  border: 1px solid;
   color: #4c4c4c;
   font-size: 15px;
   min-height: 48px;
   width: 100%;
+  padding-right:60px;
+}
+
+.input_btn_write{
+	text-align:right;
 }
 
 .type_msg {border-top: 1px solid #c4c4c4;position: relative;}
@@ -68,12 +90,20 @@ img{ max-width:100%;}
   font-size: 15px;
   height: 33px;
   position: absolute;
-  right: 0;
-  top: 11px;
+  right: 10px;
+  top: 15px;
   width: 60px;
 }
-.messaging { padding: 0 0 50px 0;}
+
 .msg_history {
-  height: 516px;
+  height: 500px;
   overflow-y: auto;
+  margin-bottom:6px;
+}
+
+.question{
+	border-radius:10px;
+	box-shadow:2px 1px lightgrey;
+	margin:4px;
+	font-size:12px;
 }

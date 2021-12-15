@@ -1,108 +1,156 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.88.1">
-    <title>Blog Template · Bootstrap v5.1</title>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Chatbot Modal Page</title>
 
-	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
-    <link href="/bootstrap/css/modal.css" rel="stylesheet">
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
+		<link href="/bootstrap/css/modal.css" rel="stylesheet">
+    	
+    	<!--<script th:src="@{/bootstrap/js/modal.js}"></script>-->
+    	
+    	<script th:inline="javascript">
+    	$(document).ready(function() {
+    		makeButton(1001,'버그신고');
+    		makeButton(1000,'업무문의');
+    					
+    		// 메시지 전송 버튼
+    		$(".msg_send_btn").click(function(){
+    			var sndMessage = $('.write_msg').val();
+    			makeReceiveMsg(sndMessage);
+    			$('.write_msg').val('');
+    		});
+    				
+    		// 닫기 버튼
+    		$("#closeButton").click(function(){
+    			window.parent.document.getElementById('chatroom').style.display="none";
+    		});
+    		
+    					
+    		$(".question").click(function(){
+    			console.log("question clicked");
+    				btnProcessLogic(this);
+    		});
+    	});
 
 
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
 
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
-    
-	<script th:inline="javascript">
-		$(document).ready(function() {
-		});
-	</script>
-  </head>
+    	function btnProcessLogic(data){
+    		var btnId = $(data).attr("id");
+    		var btnNo = btnId.split("_")[1];
+    		var btnNm = $(data).text();
+    		makeSendMsg(btnNm);
+    		
+    		$.ajax({
+    			type:"GET",
+    			url: "/main/getNextScenario",
+    			data: 'btnNo=' + btnNo,
+    			dataType:"text",
+    			success:function(res){
+    				makeReceiveMsg('ww');
+    			}
+    		});
+    	}
+
+    	// 버튼형 챗봇 시나리오
+    	function makeButton(btnNo, msg){
+    		var itemText = "";
+    		itemText += '<button id="btn_'+btnNo+'" type="button" class="btn btn-outline-primary question">'+msg+'</button>';
+    		$(itemText).appendTo($(".input_btn_write"));
+    	}
+
+    	// Make 수신봇 채팅
+    	function makeReceiveMsg(msg){
+    		var itemText = "";
+
+    		itemText += '<div class="incoming_msg">';
+    		itemText += '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>';
+    		itemText += '<div class="received_msg">';
+    		itemText += '<div class="received_withd_msg">';
+    		if(msg == ''){
+        		itemText += '<p th:text="${result}"></p>';    			
+    		}else{
+        		itemText += '<p>'+msg+'</p>';
+    		}
+    		itemText += '<span class="time_date"> 11:01 AM    |    June 9</span></div>';
+    		itemText += '</div>';
+    		itemText += '</div>';
+    		$(itemText).appendTo($(".msg_history"));
+    		$(".msg_history").scrollTop($(".msg_history")[0].scrollHeight); // 채팅 스크롤 하단 고정
+    	}
+    	// Make 질문자 채팅
+    	function makeSendMsg(msg){
+    		var itemText = "";
+
+    		itemText += '<div class="outgoing_msg">';
+    		itemText += '<div class="sent_msg">';
+    		itemText += '<p>'+msg+'</p>';
+    		itemText += '<span class="time_date"> 11:01 AM    |    June 9</span></div>';
+    		itemText += '</div>';
+    		itemText += '</div>';
+    		$(itemText).appendTo($(".msg_history"));
+    		$(".msg_history").scrollTop($(".msg_history")[0].scrollHeight); // 채팅 스크롤 하단 고정
+    	}
+    	</script>
+	</head>
   
 
 	<header>
-	  <div class="navbar navbar-dark bg-dark shadow-sm">
-	    <div class="container">
-	      <a href="#" class="navbar-brand d-flex align-items-center">
-	        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-	        <strong>문의하기</strong>
-	      </a>
-	     <button type="button" class="btn btn-light">X</button>
-	    </div>
-	  </div>
+		<div class="navbar navbar-dark bg-dark shadow-sm">
+			<div class="container">
+				<a href="#" class="navbar-brand d-flex align-items-center">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+					<strong>문의하기</strong>
+				</a>
+				<button id="closeButton" type="button" class="btn btn-light">X</button>
+			</div>
+		</div>
 	</header>
 	
-<body>
-<main class="container">
-<div class="messaging">
-      <div>
-        <div class="mesgs">
-          <div class="msg_history">
-            <div class="incoming_msg">
-              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-              <div class="received_msg">
-                <div class="received_withd_msg">
-                  <p>Test which is a new approach to have all
-                    solutions</p>
-                  <span class="time_date"> 11:01 AM    |    June 9</span></div>
-              </div>
-            </div>
-            <div class="outgoing_msg">
-              <div class="sent_msg">
-                <p>Test which is a new approach to have all
-                  solutions</p>
-                <span class="time_date"> 11:01 AM    |    June 9</span> </div>
-            </div>
-            <div class="incoming_msg">
-              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-              <div class="received_msg">
-                <div class="received_withd_msg">
-                  <p>Test, which is a new approach to have</p>
-                  <span class="time_date"> 11:01 AM    |    Yesterday</span></div>
-              </div>
-            </div>
-            <div class="outgoing_msg">
-              <div class="sent_msg">
-                <p>Apollo University, Delhi, India Test</p>
-                <span class="time_date"> 11:01 AM    |    Today</span> </div>
-            </div>
-            <div class="incoming_msg">
-              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-              <div class="received_msg">
-                <div class="received_withd_msg">
-                  <p>We work directly with our designers and suppliers,
-                    and sell direct to you, which means quality, exclusive
-                    products, at a price anyone can afford.</p>
-                  <span class="time_date"> 11:01 AM    |    Today</span></div>
-              </div>
-            </div>
-          </div>
-          <div class="type_msg">
-            <div class="input_msg_write">
-              <input type="text" class="write_msg" placeholder="Type a message" />
-              <button class="msg_send_btn" type="button">보내기</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    </main>
-    </body>
+	<body>
+		<main class="container">
+			<div class="messaging">
+				<div>
+					<div class="mesgs">
+						<div class="msg_history">
+				            <div class="incoming_msg">
+	              				<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+	              				<div class="received_msg">
+	                				<div class="received_withd_msg">
+	                  					<p>안녕하세요. 챗봇 서비스를 이용해주셔서 감사합니다.</p>
+	                  					<span class="time_date"> 11:01 AM    |    June 9</span>
+	                  				</div>
+	              				</div>
+	            			</div>
+	            			
+	            			<div class="incoming_msg">
+	              				<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+	              				<div class="received_msg">
+	              					<div class="received_withd_msg">
+	                  					<p>필요한 문의사항을 선택해주세요.</p>
+	                  					<span class="time_date"> 11:01 AM    |    June 9</span>
+	                  				</div>
+								</div>
+	            			</div>
+						</div>
+				
+						<div id="inputDiv">
+							<div class="input_btn_write" th:style="${isButton ? 'display:block' : 'display:none'}"></div>
+		 
+							<div th:style="${isButton ? 'display:none' : 'display:block'}" class="type_msg">
+								<div class="input_msg_write">
+									<textarea class="form-control write_msg" rows="2" style="overflow:hidden;"></textarea>
+									<!--  <input type="text" class="write_msg" placeholder="Type a message" /> -->
+									<button class="msg_send_btn" type="button">보내기</button>
+								</div>
+							</div>
+						</div>
+	        		</div>
+				</div>
+			</div>
+		</main>
+	</body>
 </html>
