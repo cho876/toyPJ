@@ -113,11 +113,9 @@ h1, h2, h3, h4, h5, h6 {
 /* 플로팅 버튼 :S */
 #floatMenu {
 	position: fixed;
-	right: 15%;
+	right: 10%;
 	bottom: 5%;
 }
-
-
 
 @media (min-width: 768px) {
 	.bd-placeholder-img-lg {
@@ -152,6 +150,12 @@ h1, h2, h3, h4, h5, h6 {
 	width:460px;
 	height:670px;
 	position: fixed;
-	right: 15%;
+	right: 10%;
 	bottom: 10%;
+}
+
+#chatroom .chatIframe{
+	border:2px solid black;
+	border-radius: 20px;
+	box-shadow: 2px 2px 2px grey;
 }

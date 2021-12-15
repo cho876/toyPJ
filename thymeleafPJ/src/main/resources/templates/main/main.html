@@ -17,24 +17,18 @@
     <link href="/bootstrap/css/main.css" rel="stylesheet">
     
 	<script th:inline="javascript">
-		/*$(document).ready(function() {
-			var floatPosition = parseInt($("#floatMenu").css('top'));
-			var chatPosition = parseInt($("#chatroom").css('top'));
-			
-			$(window).scroll(function() {
-				var scrollTop = $(window).scrollTop();
-				var newPosition = scrollTop + floatPosition + "px";
-				var newPosition2 = scrollTop + floatPosition - 100 + "px";
-				$("#floatMenu").stop().animate({
-					"top" : newPosition
-				}, 500);
+		$(document).ready(function() {
+			$("#floatMenu").click(function(){
+				console.log("is pushed");
+				console.log($("#floatMenu").css("display"));
+				if($("#chatroom").css("display") == "block"){
+					$("#chatroom").css("display", "none");
+				}else{
+					$("#chatroom").css("display","block");
+				}
+			});
+		});
 
-				$("#chatroom").stop().animate({
-					"top" : newPosition2
-				}, 500);
-				
-			}).scroll();
-		});*/
 	</script>
   </head>
   <body>
@@ -282,8 +276,8 @@
     </div>
   </div>
   
-  <div id="chatroom">
-		<iframe src="/main/modal" width="100%" height="100%"></iframe>
+  <div id="chatroom" style="display:none;">
+		<iframe class="chatIframe" src="/main/modal" width="100%" height="100%" scrolling="no"></iframe>
   </div>
 
 	<div id="floatMenu">
