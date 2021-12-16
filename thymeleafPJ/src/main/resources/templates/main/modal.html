@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,49 +16,71 @@
     	$(document).ready(function() {
     		makeButton(1001,'버그신고');
     		makeButton(1000,'업무문의');
-    					
-    		// 메시지 전송 버튼
-    		$(".msg_send_btn").click(function(){
-    			var sndMessage = $('.write_msg').val();
-    			makeReceiveMsg(sndMessage);
-    			$('.write_msg').val('');
-    		});
-    				
-    		// 닫기 버튼
-    		$("#closeButton").click(function(){
-    			window.parent.document.getElementById('chatroom').style.display="none";
-    		});
-    		
-    					
-    		$(".question").click(function(){
-    			console.log("question clicked");
-    				btnProcessLogic(this);
-    		});
     	});
-
-
+    	
+    	function sendBtnClick(){
+			var sndMessage = $('.write_msg').val();
+			makeReceiveMsg(sndMessage);
+			$('.write_msg').val('');
+    	}
+    	
+    	// 텍스트 입력 후, 엔터키
+    	function keyEvent(data){
+    		if(window.event.keyCode === 13){
+    			makeSendMsg(data);
+    			makeReceiveMsg("신고해주셔서 감사합니다.");
+    			makeReceiveMsg("필요한 문의사항을 선택해주세요.");
+    			changeBtnOrText("btn");
+    		}
+    	}
 
     	function btnProcessLogic(data){
+    		console.log("pushed");
     		var btnId = $(data).attr("id");
     		var btnNo = btnId.split("_")[1];
     		var btnNm = $(data).text();
     		makeSendMsg(btnNm);
     		
+    		var postData = {
+    				"user_id" : "kwonnee",
+    				"message" : "hello world",
+    		}
+    		
+    		
     		$.ajax({
-    			type:"GET",
-    			url: "/main/getNextScenario",
-    			data: 'btnNo=' + btnNo,
-    			dataType:"text",
-    			success:function(res){
-    				makeReceiveMsg('ww');
+    			contentType: 'application/json',
+    			type:"POST",
+    			url: "/api/sendMessage",
+    			data: JSON.stringify(postData),
+    			dataType:"json",
+    			success:function(data){
+    				var response = JSON.parse(data);
+    				
+    				if(response.result = "success"){
+    					var msg = response.msg;
+    					makeReceiveMsg(msg);
+    					changeBtnOrText("msg");
+    				}
     			}
     		});
     	}
 
-    	// 버튼형 챗봇 시나리오
+    	// 버튼형 or 텍스트형
+    	function changeBtnOrText(flag){
+    		if(flag =="btn"){
+    			$(".input_btn_write").css('display','block');
+    			$(".input_msg_write").css('display','none');
+    		}else{
+    			$(".input_btn_write").css('display','none');
+    			$(".input_msg_write").css('display','block');    			
+    		}
+    	}
+
+    	
+    	// 버튼 구성
     	function makeButton(btnNo, msg){
     		var itemText = "";
-    		itemText += '<button id="btn_'+btnNo+'" type="button" class="btn btn-outline-primary question">'+msg+'</button>';
+    		itemText += '<button id="btn_'+btnNo+'" type="button" class="btn btn-outline-primary question" onclick="btnProcessLogic(this);">'+msg+'</button>';
     		$(itemText).appendTo($(".input_btn_write"));
     	}
 
@@ -71,7 +93,7 @@
     		itemText += '<div class="received_msg">';
     		itemText += '<div class="received_withd_msg">';
     		if(msg == ''){
-        		itemText += '<p th:text="${result}"></p>';    			
+        		itemText += '<p th:text="${result}">www</p>';    			
     		}else{
         		itemText += '<p>'+msg+'</p>';
     		}
@@ -81,6 +103,7 @@
     		$(itemText).appendTo($(".msg_history"));
     		$(".msg_history").scrollTop($(".msg_history")[0].scrollHeight); // 채팅 스크롤 하단 고정
     	}
+    	
     	// Make 질문자 채팅
     	function makeSendMsg(msg){
     		var itemText = "";
@@ -105,7 +128,7 @@
 					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
 					<strong>문의하기</strong>
 				</a>
-				<button id="closeButton" type="button" class="btn btn-light">X</button>
+				<button id="closeButton" type="button" class="btn btn-light" onclick="{() => window.parent.document.getElementById('chatroom').style.display='none';}">X</button>
 			</div>
 		</div>
 	</header>
@@ -136,16 +159,14 @@
 								</div>
 	            			</div>
 						</div>
-				
+
 						<div id="inputDiv">
-							<div class="input_btn_write" th:style="${isButton ? 'display:block' : 'display:none'}"></div>
+							<div class="input_btn_write" style="display:block;"></div>
 		 
-							<div th:style="${isButton ? 'display:none' : 'display:block'}" class="type_msg">
-								<div class="input_msg_write">
-									<textarea class="form-control write_msg" rows="2" style="overflow:hidden;"></textarea>
-									<!--  <input type="text" class="write_msg" placeholder="Type a message" /> -->
-									<button class="msg_send_btn" type="button">보내기</button>
-								</div>
+							<div class="input_msg_write" style="display:none;">
+								<input id="send_msg" type="text" class="form-control write_msg" rows="2" style="overflow:hidden;" onkeyup="keyEvent(this.value);">
+								<!--  <input type="text" class="write_msg" placeholder="Type a message" /> -->
+								<button class="msg_send_btn" type="button" onclick="sendBtnClick();">보내기</button>
 							</div>
 						</div>
 	        		</div>
