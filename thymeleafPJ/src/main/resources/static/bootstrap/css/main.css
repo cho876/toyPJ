@@ -110,7 +110,7 @@ h1, h2, h3, h4, h5, h6 {
     user-select: none;
 }
 
-/* 플로팅 버튼 :S */
+/* 플로팅 버튼 : S */
 #floatMenu {
 	position: fixed;
 	right: 10%;
@@ -122,30 +122,6 @@ h1, h2, h3, h4, h5, h6 {
 		font-size: 3.5rem;
 	}
 }
-/* 플로팅 버튼 :E */
-
-/* 모달 UI */
-.modal-title{
- font-size: 17px;
- text-align:left;
- font-weight: bold;
-}
-.modal_table{
-  width:100%;
-}
-#modal_userImg{
-  width:50px;
-  height:50px;
-  border-radius: 75%;
-}
-#modal_userId{
-  width:200px;
-}
-#modal_userFollow{
-  margin:10px;
-  text-align: right;
-}
-
 #chatroom {
 	width:380px;
 	height:670px;
@@ -159,3 +135,4 @@ h1, h2, h3, h4, h5, h6 {
 	border-radius: 20px;
 	box-shadow: 2px 2px 2px grey;
 }
+/* 플로팅 버튼 : E */

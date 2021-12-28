@@ -1,11 +1,15 @@
 package com.example.thymeleafPJ.vo;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Getter
+@Setter
+@ToString
 public class MsgVo {
 	
-	private String user_id;
-	private String message;
-	private String reg_dt;
+	private String userId;
+	private String btnNo;
+	private String regDt;
 }
