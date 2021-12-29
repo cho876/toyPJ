@@ -23,3 +23,7 @@
 ### [ reactPJ ]
 - 개발목표: Front framework로 React를 활용하여 간단한 홈페이지를 구현한다.
 - 개발스택: SpringBoot, React, Firebase
+
+### [ thymeleafPJ ] 
+- 개발목표: iframe 기반, 어느 온라인 채널에서든 사용 가능한 채널톡을 구현한다.
+- 개발스택: SpringBoot, Thymeleaf, bootstrap, DB(아직 미정)
