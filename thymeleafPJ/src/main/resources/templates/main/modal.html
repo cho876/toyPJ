@@ -1,69 +1,88 @@
 <!doctype html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Chatbot Modal Page</title>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chatbot Modal Page</title>
 
-		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-		<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
-		<link href="/bootstrap/css/modal.css" rel="stylesheet">
-    	
-    	<script th:src="@{/bootstrap/js/modal.js}"></script>
-	</head>
-  
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap"
+	rel="stylesheet">
+<link href="/bootstrap/css/modal.css" rel="stylesheet">
 
-	<header>
-		<div class="navbar navbar-dark bg-dark shadow-sm">
-			<div class="container">
-				<a href="#" class="navbar-brand d-flex align-items-center">
-					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-					<strong>문의하기</strong>
-				</a>
-				<button id="closeButton" type="button" class="btn btn-light" onclick="{() => console.log('clicked');window.parent.document.getElementById('chatroom').style.display='none';}">X</button>
-			</div>
+<script th:src="@{/bootstrap/js/modal.js}"></script>
+</head>
+
+
+<header>
+	<div class="navbar navbar-dark bg-dark shadow-sm">
+		<div class="container">
+			<a href="#" class="navbar-brand d-flex align-items-center"> <svg
+					xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+					fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16"
+					style="margin-right: 10px;">
+						<path
+						d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+						<path
+						d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z" />
+					</svg> <strong>문의하기</strong>
+			</a>
+			<button id="closeButton" type="button" class="btn btn-light"
+				onclick="{() => window.parent.document.getElementById('chatroom').style.display='none';}">X</button>
 		</div>
-	</header>
-	
-	<body>
-		<main class="container">
-			<div class="messaging">
-				<div>
-					<div class="mesgs">
-						<div class="msg_history">
-				            <div class="incoming_msg">
-	              				<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-	              				<div class="received_msg">
-	                				<div class="received_withd_msg">
-	                  					<p>안녕하세요. 챗봇 서비스를 이용해주셔서 감사합니다.</p>
-	                  					<span class="time_date"> 11:01 AM    |    June 9</span>
-	                  				</div>
-	              				</div>
-	            			</div>
-	            			
-	            			<div class="incoming_msg">
-	              				<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-	              				<div class="received_msg">
-	              					<div class="received_withd_msg">
-	                  					<p>필요한 문의사항을 선택해주세요.</p>
-	                  					<span class="time_date"> 11:01 AM    |    June 9</span>
-	                  				</div>
-								</div>
-	            			</div>
-						</div>
+	</div>
+</header>
 
-						<div id="inputDiv">
-							<div class="input_btn_write" style="display:block;"></div>
-		 
-							<div class="input_msg_write" style="display:none;">
-								<input id="send_msg" type="text" class="form-control write_msg" rows="2" style="overflow:hidden;" onkeyup="keyEvent(this.value);" autocomplete="off">
-								<button class="msg_send_btn" type="button" onclick="sendBtnClick();">보내기</button>
+<body>
+	<main class="msg_container">
+		<div class="mesgs">
+			<div class="msg_history">
+				<div class="intro_container">
+					<div style="width: 96px; height: 96px;">
+						<img class="intro_img" src="/bootstrap/image/nexon_logo.png">
+					</div>
+					<div class="intro_txt">
+						<div class="txt_title">채널톡에 문의하기</div>
+						<div class="txt_sub">
+							전자결재 서비스의 모든것 🌱<br> 궁금한 점은 언제든지 문의해주세요.
+						</div>
+					</div>
+				</div>
+				
+				<div class="incoming_msg">
+					<div class="incoming_msg_img"> <img src="/bootstrap/image/vot_profile.png" alt=""> </div>
+						<div class="received_msg">
+							<div class="received_withd_msg">
+								<p>안녕하세요! 오늘도 전자결재를 이용해주셔서 감사해요😀<br/>
+						 		   문의할 서비스 유형을 선택해주시면 자세히 안내 드릴게요!<br/><br/>
+								   현재 페이지에 대한 버그가 본다면 👉 <span style='font-weight:bold;color:black'>버그신고</span><br/>
+								   전자결재 서비스에 대해 궁금하다면 👉 <span style='font-weight:bold;color:black'>업무문의</span><br/><br/>
+								   필요한 서비스 유형을 선택해주세요.
+								</p>
 							</div>
 						</div>
-	        		</div>
+					</div>
 				</div>
-			</div>
-		</main>
-	</body>
+				
+				<div>
+					<div class="spinner-box loading" style="display:none;">
+						<div class="pulse-container">
+							<div class="pulse-bubble pulse-bubble-1"></div>
+							<div class="pulse-bubble pulse-bubble-2"></div>
+							<div class="pulse-bubble pulse-bubble-3"></div>
+						</div>
+					</div>
+					
+					<div class="input_btn_write" style="display: block;"></div>
+					<div class="input_msg_write" style="display: none;">
+						<input id="send_msg" type="text" class="form-control write_msg"
+							rows="2" placeholder="버그내용을 입력해주세요." style="overflow: hidden;"
+							onkeyup="keyEvent(this.value);" autocomplete="off">
+					</div>
+				</div>
+		</div>
+	</main>
+</body>
 </html>
