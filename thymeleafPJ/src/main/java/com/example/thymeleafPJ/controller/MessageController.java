@@ -1,22 +1,17 @@
 package com.example.thymeleafPJ.controller;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
+
 import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.thymeleafPJ.constant.ReqMap;
 import com.example.thymeleafPJ.core.base.BaseController;
-import com.example.thymeleafPJ.service.BugService;
 import com.example.thymeleafPJ.service.MessageService;
 import com.example.thymeleafPJ.vo.AnsVo;
 import com.example.thymeleafPJ.vo.BtnVo;
