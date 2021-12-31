@@ -1,0 +1,14 @@
+profile: local
+
+spring:
+  datasource:
+    chattalk:
+      driver-class-name: 0000
+      jdbc-url: 0000
+      username: 0000
+      password: 0000
+
+logging:
+  config: classpath:logback/logback-local.xml
+  
+  

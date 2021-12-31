@@ -13,9 +13,37 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>thymeleafPJ</name>
 	<description>Demo project for Spring Boot</description>
+
 	<properties>
 		<java.version>1.8</java.version>
+		<log4j2.version>2.16.0</log4j2.version>
+		<central.nexus-version>https://nexus.nexon.com/repository/fncgroupware-group/</central.nexus-version>
+		<releases.nexus-version>https://nexus.nexon.com/repository/fncgroupware-group/</releases.nexus-version>
 	</properties>
+	
+	<repositories>
+		<repository>
+			<id>nexon.fncgroupware.central</id>
+			<url>${central.nexus-version}</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>nexon.fncgroupware.release</id>
+			<url>${releases.nexus-version}</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -43,9 +71,25 @@
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>1.4.200</version>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>2.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc8</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		
+		<dependency><!-- ORACLE KO16MSWIN949 Encoding -->
+		    <groupId>cn.easyproject</groupId>
+		    <artifactId>orai18n</artifactId>
+		    <version>12.1.0.2.0</version>
 		</dependency>
 	</dependencies>
 

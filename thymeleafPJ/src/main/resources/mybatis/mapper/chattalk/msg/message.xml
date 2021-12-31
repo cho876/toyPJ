@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.chattalk.msg">
+
+	<select id="getAllMsgs" resultType="MsgVo">
+		SELECT 
+			emp_no	as empNo,
+			message,
+			regdtt
+		FROM 
+			DEV_KWONNEE.chat_msg_mst
+	</select>
+	
+	<select id="getChildBtnYn" parameterType="String" resultType="String">
+		SELECT
+			child_yn
+		FROM
+			DEV_KWONNEE.chat_btn_mst
+		WHERE
+			btnno = #{btnNo}
+	</select>
+	
+	<select id="getChildBtn" parameterType="String" resultType="BtnVo">
+		SELECT
+		    child_btnno as btnno,
+		    child_btnnm as btnnm
+		FROM
+			DEV_KWONNEE.chat_btn_relation
+		WHERE
+			parent_btnno = #{btnNo}
+	</select>
+	
+	<select id="getAnswer" parameterType="String" resultType="AnsVo">
+		SELECT
+		    child_ansno as ansno,
+		    child_ansnm as ansnm
+		FROM
+			DEV_KWONNEE.chat_ans_relation
+		WHERE
+			parent_btnno = #{btnNo}
+	</select>
+</mapper>

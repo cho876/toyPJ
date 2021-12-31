@@ -2,11 +2,11 @@ var loadTimer = 2000;
 
 var initData = [
 	{
-		btnNo: '1001',
+		btnNo: '1000',
 		btnNm: '버그신고'
 	},
 	{
-		btnNo: '1000',
+		btnNo: '1001',
 		btnNm: '업무문의'
 	}
 ];
@@ -21,6 +21,30 @@ function keyEvent(data) {
 		$(".loading").css('display', 'block');
 		makeSendMsg(data);
 		setTimeout(function() {
+
+			var postData = {
+				empNo: '27495',
+				message: data
+			}
+			$.ajax({
+				contentType: 'application/json',
+				type: "POST",
+				url: "/bug/sendBug",
+				data: JSON.stringify(postData),
+				dataType: "json",
+				success: function(data) {
+					console.log(data);
+					if (data.type == "btn") {	// button Type Answer
+						makeButton(data.btnList);
+					}
+					else if (data.type == "txt") {	// text Type Answer
+						makeReceiveMsg(data.ansVo.ansNm);
+						makeButton(initData);
+					}
+					changeBtnOrText("btn");
+				}
+			});
+
 			makeReceiveMsg("신고해주셔서 감사합니다.");
 			makeReceiveMsg("필요한 문의사항을 선택해주세요.");
 			changeBtnOrText("btn");
@@ -40,30 +64,30 @@ function btnProcessLogic(data) {
 	makeSendMsg(btnNm);
 
 	setTimeout(function() {
-		var postData = {
-			"userId": "kwonnee",
-			"btnNo": btnNo,
+	
+		if(btnNo == '1000'){	// 버그 신고일 경우, input 태그 생성
+			changeBtnOrText("txt");
+			return;
 		}
-
+		
 		$.ajax({
 			contentType: 'application/json',
-			type: "POST",
-			url: "/api/sendMessage",
-			data: JSON.stringify(postData),
+			type: "GET",
+			url: "/chat/getNextBtn",
+			data: {
+				btnNo : btnNo
+			},
 			dataType: "json",
 			success: function(data) {
-				if (data.result == "success") {
-					if (data.type == "button") {
-						var btnList = data.msg;
-						makeButton(btnList);
-						changeBtnOrText("btn");
-					}
-					else if (data.type == "text") {
-						var msg = data.msg;
-						makeReceiveMsg(msg);
-						changeBtnOrText("msg");
-					}
+				console.log(data);
+				if (data.type == "btn") {	// button Type Answer
+					makeButton(data.btnList);
 				}
+				else if (data.type == "txt") {	// text Type Answer
+					makeReceiveMsg(data.ansVo.ansNm);
+					makeButton(initData);
+				}
+				changeBtnOrText("btn");
 			}
 		});
 	}, loadTimer);
@@ -75,6 +99,7 @@ function changeBtnOrText(flag) {
 		$(".input_btn_write").css('display', 'block');
 		$(".input_msg_write").css('display', 'none');
 	} else {
+		console.log("걸림2");
 		$(".input_btn_write").css('display', 'none');
 		$(".input_msg_write").css('display', 'block');
 		$('.write_msg').val('');
@@ -88,7 +113,8 @@ function changeBtnOrText(flag) {
 function makeButton(btnList) {
 	for (var i = 0; i < btnList.length; i++) {
 		var itemText = "";
-		itemText += '<button id="btn_' + btnList[i].btnNo + '" type="button" class="btn btn-outline-primary question" onclick="btnProcessLogic(this);">' + btnList[i].btnNm + '</button>';
+		itemText += '<button id="btn_' + btnList[i].btnNo + '" type="button" class="btn btn-outline-success question" onclick="btnProcessLogic(this);">' + btnList[i].btnNm + '</button>';
+		console.log(itemText);
 		$(itemText).appendTo($(".input_btn_write"));
 	}
 
@@ -123,7 +149,9 @@ function makeSendMsg(msg) {
 
 	itemText += '<div class="outgoing_msg">';
 	itemText += '<div class="sent_msg">';
+	itemText += '<div>';
 	itemText += '<p>' + msg + '</p>';
+	itemText += '</div>';
 	itemText += '<span class="time_date">' + curDtt + '</span></div>';
 	itemText += '</div>';
 	itemText += '</div>';

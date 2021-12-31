@@ -11,5 +11,6 @@ package com.example.thymeleafPJ.constant;
 public class ReqMap {
 	public static final String LOGIN_PATH = "/login";
 	public static final String MAIN_PATH = "/main";
-	public static final String API_PATH = "/api";
+	public static final String CHAT_PATH = "/chat";
+	public static final String BUG_PATH = "/bug";
 }
