@@ -30,7 +30,7 @@ public class BugController extends BaseController{
 		HashMap<String, Object> res = new HashMap<>();
 		
 		log.info("==== sendBug ====");
-		log.info("Get Parameter - msgVo: " + msgVo.toString());
+		log.info("POST Parameter-msgVo: " + msgVo.toString());
 		log.info("curDate: " + Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
 		
 		bugService.insertMsg(msgVo);

@@ -20,7 +20,6 @@ import com.example.thymeleafPJ.service.BugService;
 import com.example.thymeleafPJ.service.MessageService;
 import com.example.thymeleafPJ.vo.AnsVo;
 import com.example.thymeleafPJ.vo.BtnVo;
-import com.example.thymeleafPJ.vo.MsgVo;
 
 @RestController
 @RequestMapping(ReqMap.CHAT_PATH)
@@ -36,7 +35,7 @@ public class MessageController extends BaseController{
 		HashMap<String, Object> res = new HashMap<>();
 		
 		log.info("==== receiveChatTalk ====");
-		log.info("Get Parameter - btnNo: " + btnNo);
+		log.info("Get Parameter-btnNo: " + btnNo);
 		String childYn = messageService.getChildBtnYn(btnNo);
 		log.info("childYn: " + childYn);
 		
